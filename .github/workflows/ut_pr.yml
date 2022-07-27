@@ -22,11 +22,16 @@ jobs:
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
+      - name: Setup Go environment
+        uses: actions/setup-go@v3.2.1
+        with:
+          # The Go version to download (if necessary) and use. Supports semver spec and ranges.
+          go-version: '1.18'
       - name: Get PR Changed Paths
-        uses: guguducken/ut-pr-action@master
+        uses: guguducken/change-paths-action@master
         id: ut-pr
         with:
           github-token: ${{ secrets.ACTION_TOKEN }}
       - name: Print Paths
         run: |
-          echo ${{ steps.ut-pr.outputs.paths }}
+          CGO_CFLAGS="-I${GITHUB_WORKSPACE}/matrixone/cgo" CGO_LDFLAGS="-L${GITHUB_WORKSPACE}/matrixone/cgo -lmo" go test -v -cover -run ^Test ${{ steps.ut-pr.outputs.paths }}
