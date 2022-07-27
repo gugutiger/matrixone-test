@@ -22,11 +22,15 @@ jobs:
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: '3'
+          path: ./matrixone-test
       - name: Setup Go environment
         uses: actions/setup-go@v3.2.1
         with:
-          # The Go version to download (if necessary) and use. Supports semver spec and ranges.
-          go-version: '1.18'
+          go-version: 1.18
+#           go-version-file: ./github.com/guguchecken/matrixone-test/go.mod
       - name: Get PR Changed Paths
         uses: guguducken/change-paths-action@master
         id: ut-pr
@@ -34,5 +38,6 @@ jobs:
           github-token: ${{ secrets.ACTION_TOKEN }}
       - name: Print Paths
         run: |
+          cd ${GITHUB_WORKSPACE}/matrixone-test
           test_scope=${{ steps.ut-pr.outputs.paths }}
-          CGO_CFLAGS="-I${GITHUB_WORKSPACE}/matrixone/cgo" CGO_LDFLAGS="-L${GITHUB_WORKSPACE}/matrixone/cgo -lmo" go test -v -cover -run ^Test ${test_scope}
+          CGO_CFLAGS="-I${GITHUB_WORKSPACE}/matrixone-test/cgo" CGO_LDFLAGS="-L${GITHUB_WORKSPACE}/matrixone-test/cgo -lmo" go test -v -cover -run ^Test ${test_scope}
