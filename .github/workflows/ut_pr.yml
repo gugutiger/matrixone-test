@@ -39,5 +39,6 @@ jobs:
           github-token: ${{ secrets.ACTION_TOKEN }}
       - name: Print Paths
         run: |
+          export GO111MODULE=on
           test_scope=${{ steps.ut-pr.outputs.paths }}
           CGO_CFLAGS="-I${GITHUB_WORKSPACE}/matrixone/cgo" CGO_LDFLAGS="-L${GITHUB_WORKSPACE}/matrixone/cgo -lmo" go test -v -cover -run ^Test ${test_scope}
