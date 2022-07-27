@@ -25,7 +25,6 @@ jobs:
       - uses: actions/checkout@v2
         with:
           fetch-depth: '3'
-          path: ./github.com/guguchecken/matrixone-test
       - name: Setup Go environment
         uses: actions/setup-go@v3.2.1
         with:
@@ -38,7 +37,7 @@ jobs:
           github-token: ${{ secrets.ACTION_TOKEN }}
       - name: Print Paths
         run: |
-          ls ${GITHUB_WORKSPACE}/github.com/matrixone-test/
+          ls ${GITHUB_WORKSPACE}
           export GO111MODULE=on
           test_scope=${{ steps.ut-pr.outputs.paths }}
-          CGO_CFLAGS="-I${GITHUB_WORKSPACE}/github.com/guguchecken/matrixone-test/cgo" CGO_LDFLAGS="-L${GITHUB_WORKSPACE}/github.com/guguchecken/matrixone-test/cgo -lmo" go test -v -cover -run ^Test ${test_scope}
+          CGO_CFLAGS="-I${GITHUB_WORKSPACE}/cgo" CGO_LDFLAGS="-L${GITHUB_WORKSPACE}/cgo -lmo" go test -v -cover -run ^Test ${test_scope}
