@@ -31,7 +31,7 @@ jobs:
         with:
           # The Go version to download (if necessary) and use. Supports semver spec and ranges.
           go-version: '1.18'
-          go-version-file: ${GITHUB_WORKSPACE}/matrixone/go.mod
+          go-version-file: ${GITHUB_WORKSPACE}/github.com/guguchecken/matrixone-test/go.mod
       - name: Get PR Changed Paths
         uses: guguducken/change-paths-action@master
         id: ut-pr
@@ -40,6 +40,6 @@ jobs:
       - name: Print Paths
         run: |
           ls ${GITHUB_WORKSPACE}
-          export GO111MODULE=auto
+          export GO111MODULE=on
           test_scope=${{ steps.ut-pr.outputs.paths }}
           CGO_CFLAGS="-I${GITHUB_WORKSPACE}/github.com/guguchecken/matrixone-test/cgo" CGO_LDFLAGS="-L${GITHUB_WORKSPACE}/github.com/guguchecken/matrixone-test/cgo -lmo" go test -v -cover -run ^Test ${test_scope}
