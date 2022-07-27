@@ -22,6 +22,11 @@ jobs:
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      - uses: guguducken/ut-pr-action@master
+      - name: Get PR Changed Paths
+        uses: guguducken/ut-pr-action@master
+        id: ut-pr
         with:
           github-token: ${{ secrets.ACTION_TOKEN }}
+      - name: Print Paths
+        run: |
+          echo ${{ steps.ut-pr.outputs.paths }}
