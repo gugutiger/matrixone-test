@@ -29,8 +29,6 @@ jobs:
       - name: Setup Go environment
         uses: actions/setup-go@v3.2.1
         with:
-          # The Go version to download (if necessary) and use. Supports semver spec and ranges.
-          go-version: '1.18'
           go-version-file: ${GITHUB_WORKSPACE}/github.com/guguchecken/matrixone-test/go.mod
       - name: Get PR Changed Paths
         uses: guguducken/change-paths-action@master
