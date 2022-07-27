@@ -30,7 +30,7 @@ jobs:
         uses: actions/setup-go@v3.2.1
         with:
 #           go-version: 1.18
-          go-version-file: ${GITHUB_WORKSPACE}/github.com/guguchecken/matrixone-test/go.mod
+          go-version-file: ./github.com/guguchecken/matrixone-test/go.mod
       - name: Get PR Changed Paths
         uses: guguducken/change-paths-action@master
         id: ut-pr
