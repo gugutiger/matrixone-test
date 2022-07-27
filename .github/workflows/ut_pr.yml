@@ -31,6 +31,7 @@ jobs:
         with:
           # The Go version to download (if necessary) and use. Supports semver spec and ranges.
           go-version: '1.18'
+          go-version-file: ${GITHUB_WORKSPACE}/matrixone/go.mod
       - name: Get PR Changed Paths
         uses: guguducken/change-paths-action@master
         id: ut-pr
